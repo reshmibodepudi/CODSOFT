@@ -2,12 +2,20 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import string
+import pyperclip
 def generate():
     username=usernamep.get()
     length=int(lengthp.get())
     characters=string.ascii_letters+string.digits+string.punctuation
     password=''.join(random.choice(characters) for _ in range(length))
     done.config(text=f"Generated password is:{password}",font="comicsansms 10")
+def accept():
+    length=int(lengthp.get())
+    characters=string.ascii_letters+string.digits+string.punctuation
+    password=''.join(random.choice(characters) for _ in range(length))
+    pyperclip.copy(password)
+    spam = pyperclip.paste()
+    messagebox.showinfo("copied","password copied to clipboard!")
 def reset():
     lengthp.delete(0,END)
     usernamep.delete(0,END)
@@ -30,6 +38,8 @@ lengthp.grid(row=2,column=1,pady=3)
 gen= Button(passwordgenerator, text="GENERATE PASSWORD", command=generate,borderwidth=2,
                          bg="navyblue",fg="white",font="comicsansms 10")
 gen.place(x=200,y=130)
+accept=Button(passwordgenerator, text="ACCEPT", command=accept,fg="black",font="comicsansms 10")
+accept.place(x=240,y=170)
 reset=Button(passwordgenerator, text="RESET", command=reset,fg="navyblue",font="comicsansms 10")
-reset.place(x=240,y=170)
+reset.place(x=245,y=200)
 passwordgenerator.mainloop()
